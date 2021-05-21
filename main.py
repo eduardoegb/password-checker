@@ -1,3 +1,5 @@
+import sys
+from getpass import getpass
 import requests
 import hashlib
 
@@ -16,8 +18,8 @@ def get_leaks_count(hashes_list, hash_to_check):
 		if h == hash_to_check:
 			print(f'Password leaked {count} times')
 			return
-		print('Congrats! Excellent password!')
-		return
+	print('Congrats! Excellent password!')
+	return
 
 
 def pwned_api_check(password):
@@ -27,4 +29,13 @@ def pwned_api_check(password):
 	get_leaks_count(res, tail)
 
 
-pwned_api_check('1234')
+def check_my_password():
+	if len(sys.argv) >= 2:
+		password = sys.argv[1]
+	else:
+		password = getpass('Please write the password you want to check: ')
+	pwned_api_check(password)
+
+
+if __name__ == '__main__':
+	check_my_password()
